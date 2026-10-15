@@ -1,0 +1,452 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --erp-bg-light: #eaedf1;
+    --erp-bg-dark: #0b1120;
+    --erp-bg: var(--erp-bg-light);
+    --erp-surface-light: #ffffff;
+    --erp-surface-dark: #151e2e;
+    --erp-surface: var(--erp-surface-light);
+    --erp-surface-subtle-dark: #0f172a;
+    --erp-border: #cbd5e1;
+    --erp-border-dark: #2d3e53;
+    --erp-primary: #334155;
+    --erp-primary-hover: #1e293b;
+    --erp-navbar-bg: #1e293b;
+    --erp-navbar-dark: #0f172a;
+    --erp-accent: #0284c7;
+  }
+
+  .dark {
+    --erp-bg: var(--erp-bg-dark, #0b1120);
+    --erp-surface: var(--erp-surface-dark, #151e2e);
+    --erp-header: var(--erp-primary, #334155);
+    --erp-border: var(--erp-border-dark, #2d3e53);
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--erp-bg);
+    color: #1e293b;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, Arial, sans-serif;
+    min-height: 100vh;
+    font-size: 13px;
+    line-height: 1.4;
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+
+  /* Entorno administrativo: Inputs y selectores clásicos con bordes definidos */
+  input, select, textarea {
+    border-color: #94a3b8;
+    font-family: inherit;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #475569;
+    box-shadow: 0 0 0 1px #475569;
+  }
+
+  /* Barras de scroll limpias y cuadradas estilo software de escritorio */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #e2e8f0;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #94a3b8;
+    border-radius: 0px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #64748b;
+  }
+
+  .dark ::-webkit-scrollbar-track {
+    background: #0f172a;
+  }
+  .dark ::-webkit-scrollbar-thumb {
+    background: #334155;
+  }
+  .dark ::-webkit-scrollbar-thumb:hover {
+    background: #475569;
+  }
+}
+
+/* Clases de utilidad para estética de ERP clásico de escritorio */
+.erp-window {
+  background: #ffffff;
+  border: 1px solid #94a3b8;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.erp-header-bar {
+  background: var(--erp-primary, #334155) !important;
+  color: #ffffff !important;
+  border-bottom: 2px solid var(--erp-primary-hover, #1e293b) !important;
+}
+
+.erp-btn-primary,
+.erp-btn.bg-slate-700,
+.bg-slate-700.text-white {
+  background-color: var(--erp-primary, #334155) !important;
+  color: #ffffff !important;
+  border: 1px solid var(--erp-primary-hover, #1e293b) !important;
+}
+
+.erp-btn-primary:hover,
+.erp-btn.bg-slate-700:hover,
+.bg-slate-700.text-white:hover {
+  background-color: var(--erp-primary-hover, #1e293b) !important;
+}
+
+.erp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.erp-table th {
+  background-color: #f8fafc;
+  color: var(--erp-primary, #334155);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  border: 1px solid #e2e8f0;
+  padding: 6px 10px;
+  text-align: left;
+}
+
+.erp-table td {
+  border: 1px solid #e2e8f0;
+  padding: 6px 10px;
+}
+
+.erp-table tr:nth-child(even) {
+  background-color: #f8fafc;
+}
+
+.erp-table tr:hover {
+  background-color: #f1f5f9;
+}
+
+.erp-btn {
+  background-color: #f1f5f9;
+  color: #1e293b;
+  border: 1px solid #94a3b8;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: all 0.1s ease;
+}
+
+.erp-btn:hover {
+  background-color: #e2e8f0;
+  border-color: #64748b;
+}
+
+
+/* ============================================================
+   ESTILOS ESPECÍFICOS DE MODO OSCURO (ESTÉTICA BUROCRÁTICA NOCTURNA)
+   ============================================================ */
+
+.dark body {
+  background-color: var(--erp-bg-dark, #0b1120) !important;
+  color: #f1f5f9 !important;
+}
+
+.dark .min-h-screen {
+  background-color: var(--erp-bg-dark, #0b1120) !important;
+  color: #f1f5f9;
+}
+
+.dark .bg-\[\#eaedf1\] {
+  background-color: var(--erp-bg-dark, #0b1120) !important;
+}
+
+.dark .bg-white {
+  background-color: var(--erp-surface-dark, #151e2e) !important;
+  color: #f1f5f9;
+}
+
+.dark .bg-slate-50 {
+  background-color: var(--erp-surface-subtle-dark, #0f172a) !important;
+  color: #f1f5f9;
+}
+
+.dark .bg-slate-100 {
+  background-color: var(--erp-surface-dark, #151e2e) !important;
+  color: #f1f5f9;
+}
+
+.dark .bg-slate-200 {
+  background-color: var(--erp-surface-subtle-dark, #0f172a) !important;
+  color: #f1f5f9;
+}
+
+.dark .bg-slate-300 {
+  background-color: var(--erp-border-dark, #2d3e53) !important;
+}
+
+.dark .border-slate-200,
+.dark .border-slate-300,
+.dark .border-slate-400,
+.dark .border-slate-500,
+.dark .border-slate-600 {
+  border-color: var(--erp-border-dark, #2d3e53) !important;
+}
+
+.dark .text-slate-950,
+.dark .text-slate-900,
+.dark .text-slate-800,
+.dark .text-slate-700 {
+  color: #f1f5f9 !important;
+}
+
+.dark .text-slate-600,
+.dark .text-slate-500 {
+  color: #cbd5e1 !important;
+}
+
+.dark .text-slate-400 {
+  color: #94a3b8 !important;
+}
+
+/* Modales y ventanas en modo oscuro */
+.dark .erp-window {
+  background-color: var(--erp-surface-dark, #151e2e) !important;
+  border-color: var(--erp-border-dark, #2d3e53) !important;
+  color: #f1f5f9 !important;
+}
+
+.dark .erp-header-bar {
+  background-color: var(--erp-primary, #334155) !important;
+  color: #ffffff !important;
+  border-bottom-color: var(--erp-primary-hover, #1e293b) !important;
+}
+
+/* Tablas en modo oscuro */
+.dark .erp-table th,
+.dark table thead th,
+.dark table thead {
+  background-color: var(--erp-surface-subtle-dark, #0f172a) !important;
+  color: #cbd5e1 !important;
+  border-color: var(--erp-border-dark, #2d3e53) !important;
+}
+
+.dark .erp-table td,
+.dark table tbody td {
+  border-color: var(--erp-border-dark, #2d3e53) !important;
+  color: #f1f5f9 !important;
+}
+
+.dark .erp-table tr:nth-child(even),
+.dark table tbody tr:nth-child(even) {
+  background-color: var(--erp-surface-subtle-dark, #0f172a) !important;
+}
+
+.dark .erp-table tr:nth-child(odd),
+.dark table tbody tr:nth-child(odd) {
+  background-color: var(--erp-surface-dark, #151e2e) !important;
+}
+
+.dark .erp-table tr:hover,
+.dark table tbody tr:hover {
+  background-color: var(--erp-border-dark, #2d3e53) !important;
+}
+
+/* Botones en modo oscuro */
+.dark .erp-btn {
+  background-color: var(--erp-surface-dark, #151e2e) !important;
+  color: #f1f5f9 !important;
+  border-color: var(--erp-border-dark, #2d3e53) !important;
+}
+
+.dark .erp-btn:hover {
+  background-color: var(--erp-border-dark, #2d3e53) !important;
+}
+
+/* Inputs y selectores en modo oscuro */
+.dark input,
+.dark select,
+.dark textarea {
+  background-color: var(--erp-surface-subtle-dark, #0f172a) !important;
+  border-color: var(--erp-border-dark, #2d3e53) !important;
+  color: #f8fafc !important;
+}
+
+.dark input:focus,
+.dark select:focus,
+.dark textarea:focus {
+  border-color: var(--erp-accent, #0284c7) !important;
+  box-shadow: 0 0 0 1px var(--erp-accent, #0284c7) !important;
+}
+
+.dark select option {
+  background-color: var(--erp-surface-subtle-dark, #0f172a);
+  color: #f8fafc;
+}
+
+/* Footer en modo oscuro */
+.dark footer {
+  background-color: #0f172a !important;
+  border-color: #334155 !important;
+  color: #94a3b8 !important;
+}
+
+.dark footer a {
+  color: #cbd5e1 !important;
+}
+
+.dark footer a:hover {
+  color: #ffffff !important;
+}
+
+/* ============================================================
+   HOJA DE FACTURA REAL (FOLIO EN BLANCO IMPERMEABLE AL MODO OSCURO)
+   Tanto en pantalla como en impresión, siempre se muestra como papel real
+   ============================================================ */
+.real-invoice-backdrop {
+  background-color: rgba(15, 23, 42, 0.85) !important;
+}
+
+.real-invoice-paper,
+.dark .real-invoice-paper,
+[data-invoice-sheet="true"],
+.dark [data-invoice-sheet="true"] {
+  background-color: #ffffff !important;
+  color: #111827 !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+}
+
+.real-invoice-paper *,
+.dark .real-invoice-paper *,
+[data-invoice-sheet="true"] *,
+.dark [data-invoice-sheet="true"] * {
+  color: #111827 !important;
+}
+
+.real-invoice-paper .text-muted,
+.dark .real-invoice-paper .text-muted,
+[data-invoice-sheet="true"] .text-muted,
+.dark [data-invoice-sheet="true"] .text-muted {
+  color: #4b5563 !important;
+}
+
+.real-invoice-paper .text-subtle,
+.dark .real-invoice-paper .text-subtle,
+[data-invoice-sheet="true"] .text-subtle,
+.dark [data-invoice-sheet="true"] .text-subtle {
+  color: #6b7280 !important;
+}
+
+.real-invoice-paper table,
+.dark .real-invoice-paper table,
+[data-invoice-sheet="true"] table,
+.dark [data-invoice-sheet="true"] table {
+  background-color: #ffffff !important;
+  color: #111827 !important;
+}
+
+.real-invoice-paper th,
+.dark .real-invoice-paper th,
+[data-invoice-sheet="true"] th,
+.dark [data-invoice-sheet="true"] th {
+  background-color: #f3f4f6 !important;
+  color: #374151 !important;
+  border-color: #e5e7eb !important;
+}
+
+.real-invoice-paper td,
+.dark .real-invoice-paper td,
+[data-invoice-sheet="true"] td,
+.dark [data-invoice-sheet="true"] td {
+  background-color: #ffffff !important;
+  color: #111827 !important;
+  border-color: #e5e7eb !important;
+}
+
+/* ============================================================
+   ESTILOS OFICIALES PARA IMPRESIÓN Y EXPORTACIÓN PDF (A4)
+   ============================================================ */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 0 !important;
+  }
+
+  html, body, #root, #root > div, main {
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+    color: #111827 !important;
+    font-size: 11pt !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: auto !important;
+    overflow: visible !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Ocultar elementos de navegación y controles interactivos en impresión */
+  header, footer, nav, button, .no-print, [data-no-print="true"] {
+    display: none !important;
+  }
+
+  /* Si hay una factura o modal oficial abierto, ocultar las ventanas de fondo */
+  body:has(.real-invoice-backdrop) .erp-window:not(.real-invoice-paper),
+  body:has(.real-invoice-backdrop) main > .space-y-3 > .erp-window,
+  body:has(.real-invoice-backdrop) main > .space-y-3 > .bg-slate-100,
+  body:has(.real-invoice-backdrop) main > .space-y-3 > .bg-white {
+    display: none !important;
+  }
+
+  /* Garantizar visibilidad de informes y contenedores oficiales de reporte */
+  .printable-report,
+  .erp-window.printable-report {
+    display: block !important;
+    background: #ffffff !important;
+    color: #111827 !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: none !important;
+  }
+
+  /* El modal de la factura se ancla en el origen del papel en blanco absoluto */
+  .real-invoice-backdrop {
+    position: fixed !important;
+    inset: 0 !important;
+    background: #ffffff !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+    z-index: 999999 !important;
+  }
+
+  .real-invoice-paper {
+    box-shadow: none !important;
+    border: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 12mm 15mm !important;
+    background-color: #ffffff !important;
+    color: #111827 !important;
+    min-height: auto !important;
+  }
+
+  .print-avoid-break {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}
+

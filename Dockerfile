@@ -1,0 +1,98 @@
+# ==========================================
+# Etapa 1: Compilación de la aplicación React
+# ==========================================
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+# Instalar dependencias
+COPY package.json package-lock.json ./
+RUN npm ci --silent || npm install
+
+# Copiar el código fuente
+COPY . .
+
+# Variables de entorno durante el build para Vite (configurables en Coolify)
+ARG VITE_POCKETBASE_URL=""
+ENV VITE_POCKETBASE_URL=$VITE_POCKETBASE_URL
+
+ARG VITE_STORE_NAME=""
+ENV VITE_STORE_NAME=$VITE_STORE_NAME
+
+ARG VITE_STORE_TAGLINE=""
+ENV VITE_STORE_TAGLINE=$VITE_STORE_TAGLINE
+
+ARG VITE_COMPANY_LEGAL_NAME=""
+ENV VITE_COMPANY_LEGAL_NAME=$VITE_COMPANY_LEGAL_NAME
+
+ARG VITE_COMPANY_ACTIVITY=""
+ENV VITE_COMPANY_ACTIVITY=$VITE_COMPANY_ACTIVITY
+
+ARG VITE_COMPANY_CIF=""
+ENV VITE_COMPANY_CIF=$VITE_COMPANY_CIF
+
+ARG VITE_COMPANY_ADDRESS=""
+ENV VITE_COMPANY_ADDRESS=$VITE_COMPANY_ADDRESS
+
+ARG VITE_COMPANY_PHONE=""
+ENV VITE_COMPANY_PHONE=$VITE_COMPANY_PHONE
+
+ARG VITE_COMPANY_EMAIL=""
+ENV VITE_COMPANY_EMAIL=$VITE_COMPANY_EMAIL
+
+ARG VITE_COMPANY_BANK=""
+ENV VITE_COMPANY_BANK=$VITE_COMPANY_BANK
+
+ARG VITE_COMPANY_IBAN=""
+ENV VITE_COMPANY_IBAN=$VITE_COMPANY_IBAN
+
+ARG VITE_COMPANY_REG_DATA=""
+ENV VITE_COMPANY_REG_DATA=$VITE_COMPANY_REG_DATA
+
+ARG VITE_COMPANY_WEBSITE=""
+ENV VITE_COMPANY_WEBSITE=$VITE_COMPANY_WEBSITE
+
+ARG VITE_CURRENCY_SYMBOL=""
+ENV VITE_CURRENCY_SYMBOL=$VITE_CURRENCY_SYMBOL
+
+ARG VITE_DEFAULT_TAX_RATE=""
+ENV VITE_DEFAULT_TAX_RATE=$VITE_DEFAULT_TAX_RATE
+
+ARG VITE_THEME_PRIMARY_COLOR=""
+ENV VITE_THEME_PRIMARY_COLOR=$VITE_THEME_PRIMARY_COLOR
+
+ARG VITE_THEME_PRIMARY_HOVER=""
+ENV VITE_THEME_PRIMARY_HOVER=$VITE_THEME_PRIMARY_HOVER
+
+ARG VITE_THEME_NAVBAR_BG=""
+ENV VITE_THEME_NAVBAR_BG=$VITE_THEME_NAVBAR_BG
+
+ARG VITE_THEME_ACCENT_COLOR=""
+ENV VITE_THEME_ACCENT_COLOR=$VITE_THEME_ACCENT_COLOR
+
+ARG VITE_THEME_BG_LIGHT=""
+ENV VITE_THEME_BG_LIGHT=$VITE_THEME_BG_LIGHT
+
+ARG VITE_THEME_BG_DARK=""
+ENV VITE_THEME_BG_DARK=$VITE_THEME_BG_DARK
+
+# Compilar assets de producción
+RUN npm run build
+
+# ==========================================
+# Etapa 2: Servidor Web Nginx de Producción
+# ==========================================
+FROM nginx:alpine
+
+# Limpiar configuración por defecto
+RUN rm -rf /etc/nginx/conf.d/*
+
+# Copiar archivos estáticos compilados
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+# Copiar configuración con proxy inverso a PocketBase
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

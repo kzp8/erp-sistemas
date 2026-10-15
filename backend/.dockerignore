@@ -1,0 +1,4 @@
+pocketbase.exe
+*.db-shm
+*.db-wal
+.notify

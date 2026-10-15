@@ -1,0 +1,66 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - VITE_POCKETBASE_URL=${VITE_POCKETBASE_URL:-https://erp.davidrus.dev}
+        - VITE_STORE_NAME=${VITE_STORE_NAME:-ModaDaw}
+        - VITE_STORE_TAGLINE=${VITE_STORE_TAGLINE:-Sistema de Gestión Comercial y TPV}
+        - VITE_COMPANY_LEGAL_NAME=${VITE_COMPANY_LEGAL_NAME:-MODA URBAN S.L.}
+        - VITE_COMPANY_ACTIVITY=${VITE_COMPANY_ACTIVITY:-Comercio Minorista de Confección Textil y Ropa}
+        - VITE_COMPANY_CIF=${VITE_COMPANY_CIF:-B-99887766}
+        - VITE_COMPANY_ADDRESS=${VITE_COMPANY_ADDRESS:-Calle Gran Vía 10 · 28013 Madrid (España)}
+        - VITE_COMPANY_PHONE=${VITE_COMPANY_PHONE:-(+34) 91 555 44 33}
+        - VITE_COMPANY_EMAIL=${VITE_COMPANY_EMAIL:-facturas@modaurban.es}
+        - VITE_COMPANY_BANK=${VITE_COMPANY_BANK:-CaixaBank / Operativa Comercial}
+        - VITE_COMPANY_IBAN=${VITE_COMPANY_IBAN:-ES91 2100 0418 4502 0005 1324}
+        - VITE_COMPANY_REG_DATA=${VITE_COMPANY_REG_DATA:-Inscrita en el Registro Mercantil de Madrid, Tomo 34.201, Folio 88, Sección 8, Hoja M-615243}
+        - VITE_COMPANY_WEBSITE=${VITE_COMPANY_WEBSITE:-www.modadaw.es}
+        - VITE_CURRENCY_SYMBOL=${VITE_CURRENCY_SYMBOL:-€}
+        - VITE_DEFAULT_TAX_RATE=${VITE_DEFAULT_TAX_RATE:-21}
+        - VITE_THEME_PRIMARY_COLOR=${VITE_THEME_PRIMARY_COLOR:-#334155}
+        - VITE_THEME_PRIMARY_HOVER=${VITE_THEME_PRIMARY_HOVER:-#1e293b}
+        - VITE_THEME_NAVBAR_BG=${VITE_THEME_NAVBAR_BG:-#1e293b}
+        - VITE_THEME_ACCENT_COLOR=${VITE_THEME_ACCENT_COLOR:-#0284c7}
+        - VITE_THEME_BG_LIGHT=${VITE_THEME_BG_LIGHT:-#eaedf1}
+        - VITE_THEME_BG_DARK=${VITE_THEME_BG_DARK:-#0b1120}
+    image: erp-frontend:production
+    container_name: erp-frontend
+    restart: unless-stopped
+    depends_on:
+      pocketbase:
+        condition: service_healthy
+    ports:
+      - "3000:80"
+    networks:
+      - erp-network
+
+  pocketbase:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: erp-pocketbase:production
+    container_name: erp-pocketbase
+    restart: unless-stopped
+    volumes:
+      - pb_data:/pb/pb_data
+    ports:
+      - "8090:8090"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8090/api/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 5s
+    networks:
+      - erp-network
+
+volumes:
+  pb_data:
+    name: erp_pb_data
+    driver: local
+
+networks:
+  erp-network:
+    driver: bridge
